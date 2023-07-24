@@ -1,0 +1,118 @@
+<html>
+<head>
+    <title>Table 1</title>
+    <style>
+      table {
+          border-collapse: collapse;
+          width: 100%;
+          border: 1px solid #000; /* Border for the whole table */
+      }
+
+      th, td {
+          border: 1px solid #000; /* Borders for table headers and cells */
+          padding: 8px;
+          text-align: left;
+      }
+
+      th {
+          background-color: #f2f2f2; /* Optional: Add background color to table headers */
+      }
+  </style>
+</head>
+<body>
+  <div>Table 1</div>
+    <div id="csvDataContainer"></div>
+    <br>
+    <br>
+    <div id="csvCalculation"></div>
+
+    <script>
+        // obtained using csv to string converter
+        const csvContent = `Index #,Value
+A1,41
+A2,18
+A3,21
+A4,63
+A5,2
+A6,53
+A7,5
+A8,57
+A9,60
+A10,93
+A11,28
+A12,3
+A13,90
+A14,39
+A15,80
+A16,88
+A17,49
+A18,60
+A19,26
+A20,28`;
+
+        function parseCSVToArray(csvData) {
+            const rows = csvData.split('\n');
+            const dataArray = [];
+
+            for (let i = 0; i < rows.length; i++) {
+                const cells = rows[i].split(',');
+                dataArray.push(cells);
+            }
+            console.log(dataArray)
+            return dataArray;
+        }
+
+        function displayData(data) {
+            const container = document.getElementById('csvDataContainer');
+            const table = document.createElement('table');
+
+            for (let i = 0; i < data.length; i++) {
+                const row = document.createElement('tr');
+                for (let j = 0; j < data[i].length; j++) {
+                    const cell = document.createElement('td');
+                    cell.textContent = data[i][j];
+                    row.appendChild(cell);
+                }
+                table.appendChild(row);
+            }
+
+            container.appendChild(table);
+        }
+
+        function computeCalculatedArray(data){
+
+          let output = [];
+
+          output.push(["Category","Value"]);
+          output.push(["Alpha",data[5][1]+data[20][1]])
+          output.push(["Beta",data[15][1]/data[7][1]])
+          output.push(["Charlie",data[13][1]/data[12][1]])
+
+          return output;
+        }
+
+        function displayCalculationData(data) {
+            const container = document.getElementById('csvCalculation');
+            const table = document.createElement('table');
+
+            for (let i = 0; i < data.length; i++) {
+                const row = document.createElement('tr');
+                for (let j = 0; j < data[i].length; j++) {
+                    const cell = document.createElement('td');
+                    cell.textContent = data[i][j];
+                    row.appendChild(cell);
+                }
+                table.appendChild(row);
+            }
+
+            container.appendChild(table);
+        }
+
+        const dataArray = parseCSVToArray(csvContent);
+        let calculatedArray = computeCalculatedArray(dataArray);
+        displayData(dataArray);
+        displayCalculationData(calculatedArray);
+
+    </script>
+</body>
+</html>
